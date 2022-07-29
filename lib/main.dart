@@ -1,10 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kib_task/utils/app_colors.dart';
 import 'package:kib_task/utils/dimensions_initializer.dart';
 
+import 'firebase_options.dart';
+import 'home/di/app_injector.dart';
 import 'home/ui/home_page/home_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await initializeDependencies();
   runApp(const MyApp());
 }
 

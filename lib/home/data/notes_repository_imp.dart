@@ -6,7 +6,6 @@ import 'package:kib_task/utils/extensions.dart';
 
 class NotesRepositoryImp implements NotesRepository {
   final FirebaseDatabase database;
-
   NotesRepositoryImp(this.database);
 
   @override

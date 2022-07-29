@@ -71,11 +71,9 @@ class _AddNoteDialogState extends State<AddNoteDialog> {
                         showErrorSnackBar(context, "You must write anything");
                         return;
                       }
-                      print("asdasd");
                       if (widget.onSubmitPressed != null) {
                         widget.onSubmitPressed!(_noteController.text);
                       }
-                      print("dfghhhhhhh");
                       Navigator.pop(context);
                     },
                     style: ButtonStyle(

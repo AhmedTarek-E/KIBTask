@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kib_task/home/ui/home_page.dart';
 import 'package:kib_task/utils/app_colors.dart';
 import 'package:kib_task/utils/dimensions_initializer.dart';
+
+import 'home/ui/home_page/home_page.dart';
 
 void main() {
   runApp(const MyApp());

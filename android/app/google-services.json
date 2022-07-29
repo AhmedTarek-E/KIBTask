@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "302337295701",
+    "project_id": "kibtask",
+    "storage_bucket": "kibtask.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302337295701:android:6d909290daa4b7a2415bdc",
+        "android_client_info": {
+          "package_name": "com.example.kib_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302337295701-5agqupvflovjm0jqjadci26c150k3qe8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDekFSVj72MVpkdPBSaY0eU1vP2XPgqQgU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302337295701-5agqupvflovjm0jqjadci26c150k3qe8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

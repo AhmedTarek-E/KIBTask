@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kib_task/home/di/app_injector.dart';
 import 'package:kib_task/home/domain/models/note.dart';
+import 'package:kib_task/home/ui/add_note/add_note_dialog.dart';
 import 'package:kib_task/home/ui/home_page/home_state.dart';
 import 'package:kib_task/utils/app_colors.dart';
 import 'package:kib_task/utils/dimensions.dart';
@@ -21,30 +22,58 @@ class HomePage extends StatelessWidget {
         return HomeCubit(
           injector(),
           injector(),
+          injector(),
+          injector(),
         )..onStarted();
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Notes",
-            style: TextStyles.bold(
-              color: AppColors.textTertiaryColor,
-              fontSize: Dimensions.xxLarge
-            ),
-          ),
-        ),
-        body: const HomeBody(),
-        floatingActionButton: FloatingActionButton(
-          child: const Icon(Icons.add),
-          onPressed: () {
-            //TODO
-          },
-        ),
-      ),
+      child: const _HomeScaffold(),
     );
   }
 
 }
+
+class _HomeScaffold extends StatelessWidget {
+  const _HomeScaffold({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          "Notes",
+          style: TextStyles.bold(
+              color: AppColors.textTertiaryColor,
+              fontSize: Dimensions.xxLarge
+          ),
+        ),
+      ),
+      body: const HomeBody(),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
+        onPressed: () {
+          _onAddPressed(context);
+        },
+      ),
+    );
+  }
+
+  void _onAddPressed(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            content: AddNoteDialog(
+              onSubmitPressed: (content) {
+                BlocProvider.of<HomeCubit>(context)
+                    .addNote(content);
+              },
+            ),
+          );
+        }
+    );
+  }
+}
+
 
 class HomeBody extends StatelessWidget {
   const HomeBody({Key? key}) : super(key: key);
@@ -61,22 +90,6 @@ class HomeBody extends StatelessWidget {
                 return const CircularProgressIndicator.adaptive();
               }
               return Container();
-            },
-          ),
-        ),
-
-        Center(
-          child: BlocBuilder<HomeCubit, HomeState>(
-            builder: (context, state) {
-              if (state.notes.isFailure) {
-                return RetryFailedLoading(
-                  onRetryPressed: () {
-                    //TODO
-                  },
-                );
-              }
-
-              return const SizedBox();
             },
           ),
         ),
@@ -145,7 +158,7 @@ class NoteItemView extends StatelessWidget {
 
           IconButton(
             onPressed: () {
-              //TODO
+              _onEditPressed(context);
             },
             icon: const Icon(
                 Icons.edit
@@ -156,7 +169,7 @@ class NoteItemView extends StatelessWidget {
 
           IconButton(
             onPressed: () {
-              //TODO
+              BlocProvider.of<HomeCubit>(context).removeNote(note.id);
             },
             icon: const Icon(
                 Icons.delete
@@ -164,6 +177,23 @@ class NoteItemView extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _onEditPressed(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (dialogContext) {
+          return AlertDialog(
+            content: AddNoteDialog(
+              initialContent: note.text,
+              onSubmitPressed: (content) {
+                BlocProvider.of<HomeCubit>(context)
+                    .editNote(Note(note.id, content));
+              },
+            ),
+          );
+        }
     );
   }
 }
